@@ -1,9 +1,7 @@
+#from Player import Player
 class Board:
     def __init__(self):
         self.board = self.create_board()
-
-    #def create_board(self) -> str:  
-        #return  "       |_|_|_|_|_|_|_|\n       |_|_|_|_|_|_|_|\n       |_|_|_|_|_|_|_|\n       |_|_|_|_|_|_|_|\n       |_|_|_|_|_|_|_|\n       |_|_|_|_|_|_|_|\n       |_|_|_|_|_|_|_|\n       |1|2|3|4|5|6|7|"
     
     def create_board(self) -> list[list[str]]:  
         list_Board = [["|_|","_|","_|","_|","_|","_|","_|"],["|_|","_|","_|","_|","_|","_|","_|"],["|_|","_|","_|","_|","_|","_|","_|"],["|_|","_|","_|","_|","_|","_|","_|"],["|_|","_|","_|","_|","_|","_|","_|"],["|_|","_|","_|","_|","_|","_|","_|"],["|_|","_|","_|","_|","_|","_|","_|"],["|1|2|3|4|5|6|7|"]]
@@ -20,14 +18,12 @@ class Board:
         if '_' not in self.board[0][column_number]:
             return False
         return True
-
-    def add_coin_to_board(self, column_number, player_symbol) -> None:
-        row_index = -2
         
+    def add_coin_to_board(self, player_symbol, column_number:int) -> None:
+        row_index = -2
         while row_index > -9:
-            if '_' in self.board[row_index][column_number]:
+            if '_' in self.board[row_index][column_number]:# vorher column_number
                 self.board[row_index][column_number] = self.board[row_index][column_number].replace('_', player_symbol)
-
                 return
 
             row_index -= 1

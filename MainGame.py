@@ -1,5 +1,6 @@
 from Player import Player
-from StatusValidator import StatusValidatior
+from StatusValidator import StatusValidator
+from Board import Board
 
 class MainGame:
     def __init__(self) -> None:
@@ -10,15 +11,18 @@ class MainGame:
 
     def prepare_game(self) -> None:
         player_number = 1
-        self.player_one = Player(self.get_user_name(player_number), "O")
+        self.player_one = Player(self.get_user_name(player_number), "M")
         player_number = 2
         self.player_two = Player(self.get_user_name(player_number), "X")
 
-    def Turn(self, current_player, board) -> None:                        #!!!!!!!!!!!
+    def Turn(self, board, current_player) -> None:
         print(f"{current_player.player_name}: ")
         column_number = self.GetRowInput(board)
-        board.add_coin_to_board(column_number, current_player.player_symbol)
-        StatusValidatior.is_win(column_number, current_player, board.board)                                                 #!!!!!!!!!!!
+        column_number = int(column_number)
+        board.add_coin_to_board(current_player.player_symbol, column_number)
+        #StatusValidator.Validator_Board(self)
+        StatusValidator.is_win_waagerecht(self, board, current_player, column_number)
+        StatusValidator.is_win_senkrecht(self, board, current_player, column_number)
 
     def GetRowInput(self, board) -> int:
         while True:
@@ -32,14 +36,14 @@ class MainGame:
                     continue
             if not '_' in board.board[0][column_number]:
                 print(f"Full column, please enter another number than {column_number + 1}")
-                continue 
-                    
+                continue
+
             return column_number
 
     def Round(self, board, round_number) -> None:
         current_player = self.player_one
         print("\nRound " + str(round_number) + ": ")
-        self.Turn(current_player, board)
+        self.Turn(board, current_player)
         board.show_board()
         current_player = self.player_two
         print("\nRound " + str(round_number) + ": ")
